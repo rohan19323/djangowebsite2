@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block head_title %}Seller MainPage {% endblock head_title %}
+{% block content %}      
+<style>
+    h3,h4 {
+    display: inline;
+    }
+    h3
+    {
+    color:#ffc800;
+    }
+    hr {
+    margin-right: 40%;
+    }
+</style>
+{% load crispy_forms_tags %}
+<main>
+    <div class="container">
+        <section class="mb-8">
+            <div class="col-12 offset-3">
+                {% if request.session.is_seller %}
+                <h2> Hello {{request.session.username}} !! </h2> <br>
+                <h3> First Name: </h3>
+                <h4> &emsp;  {{request.session.first_name}} </h4> <br>
+                <h3> Last Name: </h3>
+                <h4> &emsp; &emsp; {{request.session.last_name}} </h4> <br>
+                <h3> Email: </h3>
+                <h4> &emsp; &emsp; {{request.session.email}} </h4> <br> <br>
+                <hr>
+                {% if request.session.is_verified %}
+                <h3> Status: </h3>
+                <h4> &emsp; &emsp; Verified </h4> <br>
+                {% else %}
+                {% if request.session.is_pdf_uploaded %}
+                <h3> Status: </h3>
+                <h4> &emsp; &emsp; Documents have been sent to admin to be verified </h4> <br>
+                {% else %}
+                <h3> Status: </h3>
+                <h4> &emsp; &emsp; Please upload the documents to know your status </h4> <br>
+                {% endif %}
+                {% endif %}
+                <h3 style="color: black;"> You are a seller </h3>
+                <hr>
+                {% else %}
+                <h1> Hello {{request.session.username}} !! </h1> <br>
+                <h3> First Name: </h3>
+                <h4> &emsp; &emsp; {{request.session.first_name}} </h4> <br>
+                <h3> Last Name: </h3>
+                <h4> &emsp; &emsp; {{request.session.last_name}} </h4> <br>
+                <h3> Email: </h3>
+                <h4> &emsp; &emsp; {{request.session.email}} </h4> <br> <br>
+                <hr>
+                <h3 style="color: black;"> You are a buyer </h3>
+                <hr>
+                {% endif %} <br>
+                <a class="btn btn-dark btn-lg" href="/update_profile/"> Update Profile </a>
+            </div>
+        </section>
+    </div>
+</main>
+{% endblock %}

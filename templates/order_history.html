@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block head_title %}Seller MainPage {% endblock head_title %}
+{% block content %}      
+{% load crispy_forms_tags %}
+<main>
+    <div class="container">
+        <section class="mb-4">
+            <div class="row wow fadeIn">
+                <div class="col-6 offset-3">
+                    <h1> Hello {{request.user.username}} !! </h1>
+                    <br>
+                    {% if request.session.is_seller %}
+                    <h1>
+                    Sellers don't have an order history </h2>
+                    {% else %}
+                    {% if is_order %}
+                    <div class="col-md-12 mb-4">
+                        <h4 class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="text-muted">Your Past Orders</span>
+                            {% for object in all_orders %}
+                            <span class="badge badge-secondary badge-pill">{{ order.items.count |safe}}</span>
+                        </h4>
+                        <ul class="list-group mb-3 z-depth-1">
+                            {% for order_item in object.items.all %}
+                            <li class="list-group-item d-flex justify-content-between lh-condensed">
+                                <div>
+                                    <h6 class="my-0">{{ order_item.quantity|safe }} x {{ order_item.item.title|safe}}</h6>
+                                    <small class="text-muted">{{ order_item.item.description|safe}}</small>
+                                </div>
+                                <span class="text-muted">₹{{ order_item.get_final_price|safe }}</span>
+                            </li>
+                            {% endfor %}
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span>Total (INR)</span>
+                                <strong>₹{{ object.get_total|safe }}</strong>
+                            </li>
+                        </ul>
+                    </div>
+                    {% endfor %}
+                    {% else %}
+                    <h1> You don't have an order yet. </h1>
+                    {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+        </section>
+    </div>
+</main>
+{% endblock %}

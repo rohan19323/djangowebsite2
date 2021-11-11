@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block head_title %}Seller MainPage {% endblock head_title %}
+{% block content %}      
+{% load crispy_forms_tags %}
+<main>
+    <div class="container">
+        <section class="mb-4">
+            <div class="row wow fadeIn">
+                <div class="col-6 offset-3">
+                    {% if request.session.is_seller %}
+                    {% if request.session.is_verified %}
+                    <h1> You are a verified seller. </h1>
+                    <center>
+                        <a href='/upload/' class='btn btn-dark btn-lg'> Upload Items</a>
+                    </center>
+                    {%else%}
+                    {% if request.session.is_pdf_uploaded %}
+                    <h1> You are yet to be verified... </h1>
+                    {% else %}
+                    <h1> Please upload a file </h1>
+                    <form enctype="multipart/form-data" action="/seller/" method="post">
+                        {% csrf_token %}
+                        {{ seller_form |crispy|safe }}
+                        <input hidden="" type='Text' name='username' value='{{request.user.username|safe}}'>
+                        <br>
+                        <button class="btn btn-primary" type="submit">Submit File</button>
+                    </form>
+                    {% endif %}
+                    {% endif %}
+                    {% else %}
+                    <h1> Please register yourself as a seller! </h1>
+                    {% endif %}
+                </div>
+            </div>
+        </section>
+    </div>
+</main>
+{% endblock %}

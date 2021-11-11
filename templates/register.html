@@ -1,0 +1,38 @@
+{% extends "base.html" %}{% load crispy_forms_tags %} {% block content %}
+<main>
+  <div class="container">
+    <section class="mb-4">
+      <div class="row wow fadeIn">
+        <div class="col-6 offset-3">
+          {% if request.user.is_authenticated %}
+            <h1>You are already signed in.</h1>
+          {% else %}
+          <p>
+            If you already have an account, <a href="/signin/">Login</a> instead.
+          </p>
+          <h1>Register</h1>
+          <form method="POST">
+            {% csrf_token %} {{ register_form|crispy|safe }}             
+            <br>
+            <button class="btn btn-primary" type="submit">Register</button>
+          </form>
+          {% endif %}
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
+{% endblock content %}
+{% block extra_scripts %}
+      <script>
+        var is_seller = document.querySelector("input[name=is_seller]");
+        var hideable_upload_pdf = document.getElementById(
+          "pdf_file"
+        );
+        hideable_upload_pdf.style.visibility = "hidden";
+        is_seller.addEventListener("change", function () {
+          if (this.checked) { console.log("Aaya"); hideable_upload_pdf.style.visibility = "visible";
+          } else { hideable_upload_pdf.style.visibility = "hidden";}
+        });
+      </script>
+      {% endblock extra_scripts %}

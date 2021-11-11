@@ -1,0 +1,57 @@
+{% extends "base.html" %} 
+{% block content %} 
+{% if request.session.User %}
+   {% if request.session.is_seller %}
+      <br> <br> <br> <br> <br> <center> <h1> You are a seller! </h1> 
+      <a href='/seller/' class='btn btn-dark btn-lg'> Check your status.</a>
+      </center>
+   {%else%}
+         <br> <center> <h1> You searched for ... </h1> </center>
+      <section style="text-align: center;" class="text-center mb-4">
+         <div class="row wow fadeIn">
+            {% for item in object_list %}
+               <div style="top: 100ch;" class="col-lg-3 col-md-6 mb-4">
+                  <div style="margin-left: 10ch; size: 10ch; margin-top: -5ch;" class="card">
+                     <div style="margin-left: 10%; size: 10ch;" class="view overlay">
+                        <img style="align-content: center; size: 10ch;" src="{{ item.image.url }}" class="card-img-top">
+                        <a href="{{ item.get_absolute_url }}">
+                           <div class="mask rgba-white-slight"></div>
+                        </a>
+                     </div>
+                     <div class="card-body text-center">
+                        {% comment %} <a href="#" class="grey-text"> {% endcomment %}
+                           <h5>{{ item.get_category_display }}</h5>
+                        {% comment %} </a> {% endcomment %}
+                        <h5>
+                           <strong>
+                           <a href="{{ item.get_absolute_url }}" class="dark-grey-text">{{ item.title }}
+                           <span class="badge badge-pill {{ item.get_label_display }}-color">NEW</span>
+                           </a>
+                           </strong>
+                        </h5>
+                        <h4 class="font-weight-bold blue-text">
+                           <strong>₹
+                           {% if item.discount_price %}
+                           {{ item.discount_price }}
+                           {% else %}
+                           {{ item.price }}
+                           {% endif %}
+                           </strong>
+                        </h4>
+                     </div>
+                  </div>
+               </div>
+            {% endfor %}
+         </div>
+      </section>
+   {% endif %}
+{% else %}
+   <div class="container">
+      <br> <br> <br> <br> <br> <center> <h1>Please Log In! </h1> 
+         <a href='/' class='btn btn-dark btn-lg'>Home</a>
+         </center>
+   </div>
+{% endif %}
+</body>
+</html>
+{% endblock content %}

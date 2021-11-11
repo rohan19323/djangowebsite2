@@ -1,0 +1,361 @@
+{% extends "base.html" %} 
+{% block content %} 
+{% if request.session.User %}
+{% if request.session.is_seller %}
+<br> <br> <br> <br> <br> <center> <h1> You are a seller! </h1> 
+<a href='/seller/' class='btn btn-dark btn-lg'> Check your status.</a>
+</center>
+{%else%}
+<nav class="my-section navbar-expand-lg navbar ">
+   <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+      data-bs-target="#navbarResponsive2" aria-controls="navbarResponsive" aria-expanded="false" 
+      aria-label="Toggle navigation">
+      Categories
+   <i class="fas fa-bars ms-1"></i>
+   </button>
+   <div class="collapse navbar-collapse" id="navbarResponsive2">
+      <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
+         <li class="nav-item active">
+            <a class="my-link" href="#">All
+            <span class="sr-only">(current)</span>
+            </a>
+         </li>
+         <li class="nav-item">
+            <a class="my-link" id = "SW">Smart Watches</a>
+         </li>
+         <li class="nav-item">
+            <a class="my-link" href="#">Audio Gear</a>
+         </li>
+         <li class="nav-item">
+            <a class="my-link" href="#">Voice Assistants</a>
+         </li>
+         <li class="nav-item">
+            <a class="my-link" href="#">Smart Phones & Mobiles</a>
+         </li>
+         <li class="nav-item">
+            <a class="my-link" href="#">Laptops</a>
+         </li>
+         <li class="nav-item">
+            <a class="my-link" href="#">Camera & Mobile Phones</a>
+         </li>
+      </form>
+      </ul>
+   </div>
+</nav>
+<!--Section: Products v.3-->
+<section style="text-align: center;" class="text-center mb-4">
+   <div class="row wow fadeIn">
+      
+      {% for item in object_list %}
+        
+      <div style="top: 100ch;" class="col-lg-3 col-md-6 mb-4">
+         <div style="margin-left: 10ch; size: 10ch; margin-top: -5ch;" class="card">
+            <div style="margin-left: 10%; size: 10ch;" class="view overlay">
+               <img style="align-content: center; size: 10ch;" src="{{ item.image.url }}" class="card-img-top">
+               <a href="{{ item.get_absolute_url }}">
+                  <div class="mask rgba-white-slight"></div>
+               </a>
+            </div>
+            <div class="card-body text-center">
+               {% comment %} <a href="" class="grey-text"> {% endcomment %}
+                  <h5>{{ item.get_category_display }}</h5>
+               {% comment %} </a> {% endcomment %}
+               <h5>
+                  <strong>
+                  <a href="{{ item.get_absolute_url }}" class="dark-grey-text">{{ item.title }}
+                  <span class="badge badge-pill {{ item.get_label_display }}-color">NEW</span>
+                  </a>
+                  </strong>
+               </h5>
+               <h4 class="font-weight-bold blue-text">
+                  <strong>₹
+                  {% if item.discount_price %}
+                  {{ item.discount_price }}
+                  {% else %}
+                  {{ item.price }}
+                  {% endif %}
+                  </strong>
+               </h4>
+            </div>
+         </div>
+      </div>
+      {% endfor %}
+   </div>
+</section>
+{% if is_paginated %}
+<nav class="d-flex justify-content-center wow fadeIn">
+   <ul class="pagination pg-blue">
+      {% if page_obj.has_previous %}
+      <li class="page-item">
+         <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+         <span aria-hidden="true">&laquo;</span>
+         <span class="sr-only">Previous</span>
+         </a>
+      </li>
+      {% endif %}
+      <li class="page-item active">
+         <a class="page-link" href="?page={{ page_obj.number }}">{{ page_obj.number }}
+         <span class="sr-only">(current)</span>
+         </a>
+      </li>
+      {% if page_obj.has_next %}
+      <li class="page-item">
+         <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+         <span aria-hidden="true">&raquo;</span>
+         <span class="sr-only">Next</span>
+         </a>
+      </li>
+      {% endif %}
+   </ul>
+</nav>
+{% endif %}
+{% endif %}
+{% else %}
+<header class="masthead">
+   <div class="container">
+      <div class="masthead-subheading">Welcome to Apni Dukaan!</div>
+      <a class="btn btn-primary btn-xl text-uppercase" href="/signin/">Login</a>
+      <a class="btn btn-primary btn-xl text-uppercase" href='register'>Signup</a>
+   </div>
+</header>
+<body>
+   <section class="page-section" id="services">
+      <div class="container">
+         <div class="text-center">
+            <h2 class="section-heading text-uppercase">Why Apni Dukaan</h2>
+            <h3 class="section-subheading text-muted">Become a part of our family Now!</h3>
+         </div>
+         <div class="row text-center">
+            <div class="col-md-4">
+               <span class="fa-stack fa-4x">
+               <i class="fas fa-circle fa-stack-2x text-primary"></i>
+               <i class="fas fa-shopping-cart fa-stack-1x fa-inverse"></i>
+               </span>
+               <h4 class="my-3">Product Variety</h4>
+               <p class="text-muted">Over 20,000 quality products, with free exchange and delivery.</p>
+            </div>
+            <div class="col-md-4">
+               <span class="fa-stack fa-4x">
+               <i class="fas fa-circle fa-stack-2x text-primary"></i>
+               <i class="fas fa-laptop fa-stack-1x fa-inverse"></i>
+               </span>
+               <h4 class="my-3">Grow your Bussiness</h4>
+               <p class="text-muted">Register yourself and your bussiness at our site to take advantage of the ever growing e-commerce platform.</p>
+            </div>
+            <div class="col-md-4">
+               <span class="fa-stack fa-4x">
+               <i class="fas fa-circle fa-stack-2x text-primary"></i>
+               <i class="fas fa-lock fa-stack-1x fa-inverse"></i>
+               </span>
+               <h4 class="my-3">Safety</h4>
+               <p class="text-muted">Your safety is our priority, we take all the necessary steps to ensure it. No contact delivery. Our products are sanitised and quarantined before they reach you.</p>
+            </div>
+         </div>
+      </div>
+   </section>
+   <section class="page-section bg-light" id="portfolio">
+      <div class="container">
+         <div class="text-center">
+            <h2 class="section-heading text-uppercase">Variety Of products</h2>
+            <h3 class="section-subheading text-muted">One stop shop for A to Z of electronics.</h3>
+         </div>
+         <div class="row">
+            <div class="col-lg-4 col-sm-6 mb-4">
+               <div class="portfolio-item">
+                  <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal1">
+                     <div class="portfolio-hover">
+                        <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                     </div>
+                     <img class="img-fluid" src="static/assets/img/portfolio/1.jpg" alt="..." />
+                  </a>
+                  <div class="portfolio-caption">
+                     <div class="portfolio-caption-heading">Smart Watches</div>
+                     <div class="portfolio-caption-subheading text-muted">Fitbits, Mi Bands</div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-4 col-sm-6 mb-4">
+               <div class="portfolio-item">
+                  <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal2">
+                     <div class="portfolio-hover">
+                        <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                     </div>
+                     <img class="img-fluid" src="static/assets/img/portfolio/2.jpg" alt="..." />
+                  </a>
+                  <div class="portfolio-caption">
+                     <div class="portfolio-caption-heading">Audio Gear</div>
+                     <div class="portfolio-caption-subheading text-muted">Pop up the Music...</div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-4 col-sm-6 mb-4">
+               <div class="portfolio-item">
+                  <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal3">
+                     <div class="portfolio-hover">
+                        <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                     </div>
+                     <img class="img-fluid" src="static/assets/img/portfolio/3.jpg" alt="..." />
+                  </a>
+                  <div class="portfolio-caption">
+                     <div class="portfolio-caption-heading">Voice Assistants</div>
+                     <div class="portfolio-caption-subheading text-muted">Never lift a finger..</div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-4 col-sm-6 mb-4 mb-lg-0">
+               <div class="portfolio-item">
+                  <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal4">
+                     <div class="portfolio-hover">
+                        <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                     </div>
+                     <img class="img-fluid" src="static/assets/img/portfolio/4.jpg" alt="..." />
+                  </a>
+                  <div class="portfolio-caption">
+                     <div class="portfolio-caption-heading">Smart Phones & Mobiles</div>
+                     <div class="portfolio-caption-subheading text-muted">Stay connected the smart way</div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-4 col-sm-6 mb-4 mb-sm-0">
+               <div class="portfolio-item">
+                  <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal5">
+                     <div class="portfolio-hover">
+                        <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                     </div>
+                     <img class="img-fluid" src="static/assets/img/portfolio/5.jpg" alt="..." />
+                  </a>
+                  <div class="portfolio-caption">
+                     <div class="portfolio-caption-heading">Laptops</div>
+                     <div class="portfolio-caption-subheading text-muted">Ultra thin Macbooks, Student Tablets</div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-4 col-sm-6">
+               <div class="portfolio-item">
+                  <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal6">
+                     <div class="portfolio-hover">
+                        <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                     </div>
+                     <img class="img-fluid" src="static/assets/img/portfolio/6.jpg" alt="..." />
+                  </a>
+                  <div class="portfolio-caption">
+                     <div class="portfolio-caption-heading">Cameras and Memory Cards</div>
+                     <div class="portfolio-caption-subheading text-muted">Capture every moment</div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+   <section class="page-section bg-light" id="team">
+      <div class="container">
+         <div class="text-center">
+            <h2 class="section-heading text-uppercase">Our Amazing Team</h2>
+            <h3 class="section-subheading text-muted">Working really hard for your security and convinience.</h3>
+         </div>
+         <div class="row">
+            <div class="col-lg-4">
+               <div class="team-member">
+                  <img class="mx-auto rounded-circle" src="static/assets/img/team/1.jpg" alt="..." />
+                  <h4>Prashasti Agarwal</h4>
+                  <p class="text-muted">Developer</p>
+               </div>
+            </div>
+            <div class="col-lg-4">
+               <div class="team-member">
+                  <img class="mx-auto rounded-circle" src="static/assets/img/team/2.jpg" alt="..." />
+                  <h4>Ananya Jain</h4>
+                  <p class="text-muted">Developer</p>
+               </div>
+            </div>
+            <div class="col-lg-4">
+               <div class="team-member">
+                  <img class="mx-auto rounded-circle" src="static/assets/img/team/3.jpg" alt="..." />
+                  <h4>Neha Goel</h4>
+                  <p class="text-muted">Developer</p>
+               </div>
+            </div>
+         </div>
+         <div class="row">
+            <div class="col-lg-4">
+               <div class="team-member">
+                  <img class="mx-auto rounded-circle" src="static/assets/img/team/4.jpg" alt="..." />
+                  <h4>Raghav nakra</h4>
+                  <p class="text-muted">Developer</p>
+               </div>
+            </div>
+            <div class="col-lg-4">
+               <div class="team-member">
+                  <img class="mx-auto rounded-circle" src="static/assets/img/team/5.jpg" alt="..." />
+                  <h4>Rohan Arora</h4>
+                  <p class="text-muted">Developer</p>
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+   <footer class="footer py-4">
+      <div class="container">
+         <div class="row align-items-center">
+            <div class="col-lg-4 text-lg-end">
+               <a class="link-dark text-decoration-none me-3" href="#!">Privacy Policy</a>
+               <a class="link-dark text-decoration-none" href="#!">Terms of Use</a>
+            </div>
+         </div>
+      </div>
+   </footer>
+   <div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog">
+         <div class="modal-content">
+            <div class="close-modal" data-bs-dismiss="modal"><img src="/static/assets/img/close-icon.svg" alt="Close modal" /></div>
+            <img class="img-fluid d-block mx-auto" src="/static/assets/img/portfolio/1.jpg" alt="..." />
+         </div>
+      </div>
+   </div>
+   <div class="portfolio-modal modal fade" id="portfolioModal2" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog">
+         <div class="modal-content">
+            <div class="close-modal" data-bs-dismiss="modal"><img src="/static/assets/img/close-icon.svg" alt="Close modal" /></div>
+            <img class="img-fluid d-block mx-auto" src="/static/assets/img/portfolio/2.jpg" alt="..." />
+         </div>
+      </div>
+   </div>
+   <div class="portfolio-modal modal fade" id="portfolioModal3" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog">
+         <div class="modal-content">
+            <div class="close-modal" data-bs-dismiss="modal"><img src="/static/assets/img/close-icon.svg" alt="Close modal" /></div>
+            <img class="img-fluid d-block mx-auto" src="/static/assets/img/portfolio/3.jpg" alt="..." />
+         </div>
+      </div>
+   </div>
+   <div class="portfolio-modal modal fade" id="portfolioModal4" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog">
+         <div class="modal-content">
+            <div class="close-modal" data-bs-dismiss="modal"><img src="/static/assets/img/close-icon.svg" alt="Close modal" /></div>
+            <img class="img-fluid d-block mx-auto" src="/static/assets/img/portfolio/4.jpg" alt="..." />
+         </div>
+      </div>
+   </div>
+   <div class="portfolio-modal modal fade" id="portfolioModal5" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog">
+         <div class="modal-content">
+            <div class="close-modal" data-bs-dismiss="modal"><img src="/static/assets/img/close-icon.svg" alt="Close modal" /></div>
+            <img class="img-fluid d-block mx-auto" src="/static/assets/img/portfolio/5.jpg" alt="..." />
+         </div>
+      </div>
+   </div>
+   <div class="portfolio-modal modal fade" id="portfolioModal6" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog">
+         <div class="modal-content">
+            <div class="close-modal" data-bs-dismiss="modal"><img src="/static/assets/img/close-icon.svg" alt="Close modal" /></div>
+            <img class="img-fluid d-block mx-auto" src="/static/assets/img/portfolio/6.jpg" alt="..." />
+         </div>
+      </div>
+   </div>
+   {% endif %}
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
+   <script src="/static/js/scripts.js"></script>
+   <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+</body>
+</html>
+{% endblock content %}

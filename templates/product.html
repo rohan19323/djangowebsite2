@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block content %}
+<main class="mt-5 pt-4">
+   <div class="container dark-grey-text mt-5">
+   <div class="row wow fadeIn">
+      <div class="col-md-6 mb-4">
+         <img src="{{ item.image.url }}" class="img-fluid" alt="Product Image"  height = 300px width = 200 px>
+         <br>
+         <img src="{{ item.image2.url }}" class="img-fluid" alt="Product Image"  height = 300px width = 200 px>
+      </div>
+      <div class="col-md-6 mb-4">
+         <div class="p-4">
+            <div class="mb-3">
+               <a href="">
+               <span class="badge purple mr-1">{{ object.get_category_display|safe }}</span>
+               </a>
+            </div>
+            <p class="lead">
+               {% if object.discount_price %}
+               <span class="mr-1">
+               <del>₹{{ object.price|safe }}</del>
+               </span>
+               <span>₹{{ object.discount_price|safe }}</span>
+               {% else %}
+               <span>₹{{ object.price|safe }}</span>
+               {% endif %}
+            </p>
+            <p class="lead font-weight-bold">Description</p>
+            <p>{{ object.description|safe }}</p>
+            <a href="{{ object.get_add_to_cart_url }}" class="btn btn-primary btn-md my-0 p">
+            Add to cart
+            <i class="fas fa-shopping-cart ml-1"></i>
+            </a>
+            <a href="{{ object.get_remove_from_cart_url }}" class="btn btn-danger btn-md my-0 p">
+            Remove from cart
+            </a>
+         </div>
+      </div>
+   </div>
+   <hr>
+</main>
+{% endblock content %}

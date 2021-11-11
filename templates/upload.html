@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block head_title %}Seller Upload Page {% endblock head_title %}
+{% block content %}      
+{% load crispy_forms_tags %}
+<main>
+    <div class="container">
+        <section class="mb-4">
+            <div class="row wow fadeIn">
+                <div class="col-6 offset-3">
+                    {% if request.session.is_seller %}
+                      {% if request.session.is_verified %}
+                        <h1> Upload Items </h1>
+                        <form enctype="multipart/form-data" action="/upload/" method="post">
+                            {% csrf_token %}
+                            {{ item_upload_form |crispy|safe }}
+                            <input hidden="" type='Text' name='username' value='{{request.user.username|safe}}'>
+                            <br>
+                            <button class="btn btn-primary" type="submit">Upload Item</button>
+                        </form>
+                      {%else%}
+                        <h1> You are not yet verified for this action... </h1>
+                      {% endif %}
+                    {% else %}
+                      <h1> Please register as a seller... </h1>
+                    {% endif %}
+                </div>
+            </div>
+        </section>
+    </div>
+</main>
+{% endblock %}
